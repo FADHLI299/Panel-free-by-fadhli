@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="dashboard" id="dashboardContent">
+    <!-- Loading... -->
+  </div>
+
+  <script>
+    // Redirect jika belum login
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      window.location.href = 'login.html';
+    }
+
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if (!user || !user.fullname) {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    }
+
+    document.getElementById('dashboardContent').innerHTML = `
+      <h1>Welcome, ${user.fullname}!</h1>
+      <div class="user-info">
+        <p><strong>Username:</strong> ${user.username}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+      </div>
+      <p>You have successfully logged in.</p>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    `;
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>
